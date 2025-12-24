@@ -27,11 +27,13 @@ def download():
             output_template = os.path.join(tmpdir, 'video')
             
             ydl_opts = {
-                'format': 'best',
+                'format': 'best/best',
                 'outtmpl': output_template,
                 'quiet': False,
                 'no_warnings': False,
                 'socket_timeout': 60,
+                'noplaylist': True,
+                'ignoreerrors': False,
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
