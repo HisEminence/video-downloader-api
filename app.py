@@ -27,17 +27,19 @@ def download():
             output_template = os.path.join(tmpdir, 'video')
             
             ydl_opts = {
-                'format': 'bestvideo[height<=720]+bestaudio/best[height<=720]/best',
+                'format': 'best',
                 'outtmpl': output_template,
                 'quiet': False,
                 'no_warnings': False,
                 'socket_timeout': 60,
                 'noplaylist': True,
-                'ignoreerrors': False,
-                'postprocessors': [{
-                    'key': 'FFmpegVideoConvertor',
-                    'preferedformat': 'mp4'
-                }],
+                'ignoreerrors': True,
+                'skip_unavailable_fragments': True,
+                'extractor_args': {
+                    'youtube': {
+                        'player_client': ['ios', 'web'],
+                    }
+                },
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
