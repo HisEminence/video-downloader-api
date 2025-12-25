@@ -16,7 +16,7 @@ def health():
 def download():
     try:
         data = request.get_json()
-        video_url = data.get('url')
+        video_url = data.get('url') if data else None
         
         if not video_url:
             return jsonify({'error': 'No URL provided'}), 400
@@ -33,13 +33,7 @@ def download():
                 'no_warnings': False,
                 'socket_timeout': 60,
                 'noplaylist': True,
-                'ignoreerrors': True,
-                'skip_unavailable_fragments': True,
-                'extractor_args': {
-                    'youtube': {
-                        'player_client': ['ios', 'web'],
-                    }
-                },
+                'ignoreerrors': False,
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
